@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Guia amigável de prompt engineering com frameworks, templates marcados para substituir e exemplos práticos."
+    />
+    <title>Prompt Engineering: Guia de Bolso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Cpath d='M15 20h34M15 32h22M15 44h30' stroke='%232f64ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      window.tailwind = window.tailwind || {};
+      window.tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Encode Sans", "system-ui", "sans-serif"],
+            },
+            colors: {
+              brand: {
+                black: "#000000",
+                soft: "#050505",
+                blue: "#1748e8",
+                light: "#2f64ff",
+                ink: "#d7d7df",
+                muted: "#9ca0b4",
+                white: "#f7f7fb",
+                pill: "#eceff5",
+                card: "#10121a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :root {
+        --black: #000000;
+        --black-soft: #050505;
+        --blue: #1748e8;
+        --blue-light: #2f64ff;
+        --ink: #d7d7df;
+        --muted: #9ca0b4;
+        --white: #f7f7fb;
+        --pill: #eceff5;
+        --card: #10121a;
+        --line: rgba(255, 255, 255, 0.12);
+        color-scheme: dark;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--white);
+        font-family: "Encode Sans", system-ui, sans-serif;
+        letter-spacing: 0;
+      }
+
+      .focus-ring:focus-visible {
+        outline: 3px solid rgba(47, 100, 255, 0.95);
+        outline-offset: 3px;
+      }
+
+      .btn {
+        min-height: 44px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 22px;
+        font-size: 15px;
+        font-weight: 800;
+        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: var(--blue);
+        color: var(--white);
+      }
+
+      .btn-primary:hover {
+        background: var(--blue-light);
+      }
+
+      .btn-light {
+        background: var(--pill);
+        color: var(--black);
+      }
+
+      .btn-light:hover {
+        background: var(--white);
+      }
+
+      .btn-ghost {
+        border: 1px solid var(--line);
+        color: var(--white);
+      }
+
+      .btn-ghost:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.24);
+      }
+
+      .copy-button[data-copied="true"] .copy-label {
+        display: none;
+      }
+
+      .copy-button[data-copied="true"] .copied-label {
+        display: inline;
+      }
+
+      .placeholder {
+        border-radius: 999px;
+        background: rgba(47, 100, 255, 0.14);
+        color: var(--white);
+        padding: 0.08rem 0.45rem;
+        white-space: nowrap;
+      }
+
+      .section-shell {
+        width: min(1180px, calc(100% - 36px));
+        margin-inline: auto;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+    </style>
+  </head>
+
+  <body class="antialiased">
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-brand-black/90 backdrop-blur-xl">
+      <nav class="section-shell flex items-center justify-between gap-4 py-4">
+        <a href="#inicio" class="focus-ring flex min-w-0 items-center gap-3 rounded-full">
+          <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-blue text-sm font-extrabold text-brand-white">PE</span>
+          <span class="truncate text-sm font-semibold text-brand-white">Prompt Engineering</span>
+        </a>
+        <div class="hidden items-center gap-2 text-sm font-semibold text-brand-muted md:flex">
+          <a class="focus-ring rounded-full px-3 py-2 hover:bg-white/10 hover:text-brand-white" href="#escolha">Escolha</a>
+          <a class="focus-ring rounded-full px-3 py-2 hover:bg-white/10 hover:text-brand-white" href="#frameworks">Frameworks</a>
+          <a class="focus-ring rounded-full px-3 py-2 hover:bg-white/10 hover:text-brand-white" href="#checklist">Checklist</a>
+        </div>
+        <a href="#frameworks" class="btn btn-primary focus-ring">Copiar templates</a>
+      </nav>
+    </header>
+
+    <main id="inicio">
+      <section class="border-b border-white/10 bg-[radial-gradient(circle_at_75%_25%,rgba(23,72,232,0.20),transparent_340px)]">
+        <div class="section-shell grid min-h-[calc(100svh-73px)] items-center gap-10 py-12 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <p class="inline-flex rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-brand-ink">
+              Guia de bolso prático
+            </p>
+            <h1 class="mt-6 max-w-3xl text-pretty text-5xl font-light leading-[1.02] text-brand-ink sm:text-6xl lg:text-7xl">
+              Prompts melhores, sem decorar fórmula.
+            </h1>
+            <p class="mt-6 max-w-2xl text-lg leading-8 text-brand-muted">
+              Use este guia para escolher o framework certo, preencher os campos marcados e transformar pedidos vagos em prompts claros.
+            </p>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="#escolha" class="btn btn-light focus-ring">Me ajude a escolher</a>
+              <a href="#universal" class="btn btn-ghost focus-ring">Ver template universal</a>
+            </div>
+          </div>
+
+          <div class="relative">
+            <img
+              src="assets/guide-hero.png"
+              alt="Ilustração abstrata de cartões de prompt com campos substituíveis"
+              class="aspect-[1.18/1] w-full rounded-[28px] border border-white/10 object-cover shadow-[0_26px_90px_rgba(23,72,232,0.22)]"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section id="escolha" class="section-shell py-16">
+        <div class="max-w-3xl">
+          <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Escolha rápida</span>
+          <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Use o menor método que resolve o seu problema.</h2>
+          <p class="mt-4 text-base leading-7 text-brand-muted">
+            A ideia não é usar tudo sempre. É escolher a estrutura que dá contexto suficiente para a IA responder bem.
+          </p>
+        </div>
+
+        <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <a href="#tag" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Tenho pressa</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">TAG</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para um pedido direto, com pouco contexto e resultado rápido.</p>
+          </a>
+          <a href="#race" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Quero controle</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">RACE</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para escrever, revisar, explicar ou analisar com papel, contexto e formato.</p>
+          </a>
+          <a href="#care" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Preciso de qualidade</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">CARE</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para tarefas profissionais com regras, tom de marca e exemplos.</p>
+          </a>
+          <a href="#react" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Precisa pesquisar</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">ReAct</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para raciocinar, buscar evidências, usar ferramentas e só então concluir.</p>
+          </a>
+          <a href="#bdi" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Estou criando agente</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">BDI</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para separar o que o agente sabe, quer e pretende fazer.</p>
+          </a>
+          <a href="#rubrica" class="focus-ring rounded-[22px] border border-white/10 bg-brand-card p-5 transition hover:border-brand-light/60">
+            <p class="text-sm font-extrabold text-brand-light">Quero avaliar</p>
+            <h3 class="mt-2 text-2xl font-semibold text-brand-white">Rúbrica</h3>
+            <p class="mt-2 text-sm leading-6 text-brand-muted">Para dar nota, encontrar falhas e pedir uma versão melhor.</p>
+          </a>
+        </div>
+      </section>
+
+      <section id="universal" class="border-y border-white/10 bg-brand-soft py-16">
+        <div class="section-shell grid gap-8 lg:grid-cols-[0.7fr_1fr]">
+          <div>
+            <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Como preencher</span>
+            <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Tudo que estiver entre <span class="placeholder">[[ ]]</span> é para substituir.</h2>
+            <p class="mt-4 text-base leading-7 text-brand-muted">
+              Exemplo: troque <span class="placeholder">[[PÚBLICO]]</span> por “donos de pequenos negócios” ou <span class="placeholder">[[FORMATO]]</span> por “tabela com 3 colunas”.
+            </p>
+          </div>
+
+          <article class="rounded-[26px] border border-white/10 bg-brand-card p-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <h3 class="text-2xl font-semibold text-brand-white">Template universal</h3>
+              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-universal">
+                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+              </button>
+            </div>
+            <pre id="copy-universal" class="mt-4 rounded-[20px] bg-black/45 p-5 text-sm leading-7 text-brand-ink"><code>Você é [[PAPEL_ESPECIALISTA]].
+
+Preciso que você [[AÇÃO_PRINCIPAL]].
+
+Contexto:
+- Público: [[PÚBLICO]]
+- Situação: [[SITUAÇÃO]]
+- Dados importantes: [[DADOS_OU_REFERÊNCIAS]]
+
+Regras:
+- Use tom [[TOM]]
+- Evite [[O_QUE_EVITAR]]
+- Responda em [[FORMATO]]
+
+Critério de sucesso:
+[[COMO_SABER_QUE_A_RESPOSTA_FICOU_BOA]]</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="frameworks" class="section-shell py-16">
+        <div class="max-w-3xl">
+          <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Frameworks</span>
+          <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Templates com campos marcados e exemplos preenchidos.</h2>
+        </div>
+
+        <div class="mt-10 space-y-8">
+          <article id="tag" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">TAG</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Task, Action, Goal</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a tarefa é simples e você só precisa organizar o pedido para a IA não adivinhar o objetivo.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> evita pedidos soltos como “faça um post”.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> posts, ideias, e-mails simples, resumos rápidos e listas.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> existe muito contexto, regras de marca ou risco de interpretação.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-tag-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-tag-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Task: [[O_QUE_PRECISA_SER_FEITO]]
+
+Action: [[COMO_DEVE_SER_FEITO]]
+
+Goal: [[OBJETIVO_FINAL_OU_CRITÉRIO_DE_SUCESSO]]</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Task: Escreva um post de LinkedIn sobre IA no atendimento ao cliente.
+
+Action: Crie uma abertura forte, 3 ideias práticas e uma pergunta final. Evite jargões técnicos.
+
+Goal: Ajudar donos de pequenos negócios a entenderem como usar IA para responder dúvidas frequentes e ganhar tempo. Use até 1.200 caracteres.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="race" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">RACE</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Role, Action, Context, Expectation</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use quando você quer uma resposta mais controlada, com especialista, contexto e formato de saída.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> dá direção clara sobre quem a IA deve “ser” e como responder.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> conteúdo, revisão, análise, explicações, propostas e e-mails importantes.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> a tarefa é tão simples que TAG resolve.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-race-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-race-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Role: Você é [[PAPEL_ESPECIALISTA]].
+
+Action: [[AÇÃO_EXATA_QUE_A_IA_DEVE_EXECUTAR]]
+
+Context: [[PÚBLICO_CENÁRIO_DADOS_RESTRIÇÕES]]
+
+Expectation: Responda em [[FORMATO]], com tom [[TOM]], tamanho [[TAMANHO]] e inclua [[CRITÉRIOS_OBRIGATÓRIOS]].</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Role: Você é um gerente comercial experiente, cordial e objetivo.
+
+Action: Redija um e-mail para um cliente que pediu 30% de desconto, mas nossa política permite no máximo 10%.
+
+Context: O cliente compra todo mês e estamos em negociação de renovação. Queremos preservar o relacionamento sem abrir uma exceção perigosa.
+
+Expectation: Responda com até 180 palavras, tom consultivo, oferecendo 10% de desconto e uma alternativa de valor, como suporte prioritário.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="care" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">CARE</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Context, Ask, Rules, Examples</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a resposta precisa ficar profissional, respeitar regras e seguir exemplos de tom ou estilo.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> exemplos e regras reduzem respostas genéricas.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> UX writing, mensagens sensíveis, marca, atendimento, propostas e textos finais.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> você não tem exemplos ou regras relevantes.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-care-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-care-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Context: [[SITUAÇÃO_PROJETO_PÚBLICO]]
+
+Ask: [[O_QUE_VOCÊ_QUER_QUE_A_IA_ENTREGUE]]
+
+Rules:
+- [[REGRA_DE_TOM]]
+- [[REGRA_DE_TAMANHO]]
+- [[O_QUE_EVITAR]]
+- [[CRITÉRIO_OBRIGATÓRIO]]
+
+Examples:
+- Bom: [[EXEMPLO_BOM]] porque [[POR_QUE_FUNCIONA]]
+- Ruim: [[EXEMPLO_RUIM]] porque [[POR_QUE_EVITAR]]</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Context: Trabalho em um app de cursos online. A mensagem aparece quando o pagamento da assinatura não é aprovado.
+
+Ask: Crie 5 opções de mensagem de erro.
+
+Rules:
+- Use linguagem simples e humana.
+- Não culpe o usuário.
+- Não use humor.
+- Cada opção deve ter no máximo 90 caracteres.
+- Sugira o próximo passo.
+
+Examples:
+- Bom: "Não conseguimos confirmar o pagamento. Revise os dados ou tente outro cartão."
+- Ruim: "Seu cartão foi recusado." porque soa seco e acusatório.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="react" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">ReAct</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Reasoning + Acting</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a IA precisa pesquisar, consultar uma fonte, chamar uma ferramenta ou comparar informações antes de responder.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> separa raciocínio, ação e observação antes da conclusão.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> pesquisas, comparações, agentes, APIs, dados externos e decisões multi-etapas.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> não existe ferramenta, fonte ou necessidade de verificação externa.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-react-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-react-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Objetivo: [[RESULTADO_FINAL]]
+
+Fontes ou ferramentas disponíveis:
+- [[FONTE_OU_FERRAMENTA_1]]
+- [[FONTE_OU_FERRAMENTA_2]]
+
+Processo:
+1. Identifique quais informações precisam ser confirmadas.
+2. Consulte as fontes ou ferramentas necessárias.
+3. Registre apenas observações verificáveis.
+4. Compare as opções.
+5. Finalize com [[FORMATO_DA_RESPOSTA_FINAL]].</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Objetivo: Recomendar uma ferramenta de automação de atendimento para uma pequena escola online.
+
+Fontes ou ferramentas disponíveis:
+- Busca web
+- Páginas oficiais das ferramentas
+- Tabela comparativa
+
+Processo:
+1. Confirme preço, canais suportados, WhatsApp, usuários e facilidade de uso.
+2. Consulte páginas oficiais.
+3. Registre apenas observações verificáveis.
+4. Compare vantagens e riscos.
+5. Finalize com uma tabela curta e uma recomendação em 2 parágrafos.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="bdi" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">BDI</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Beliefs, Desires, Intentions</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use como analogia quando estiver desenhando um agente ou assistente com comportamento mais estável.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> separa fatos, objetivos e plano de ação.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> agentes de suporte, assistentes internos, triagens e automações.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> você só precisa de uma resposta única e simples.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-bdi-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-bdi-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Beliefs:
+- [[FATO_OU_CONTEXTO_1]]
+- [[FATO_OU_CONTEXTO_2]]
+- [[LIMITAÇÃO_OU_REGRA_IMPORTANTE]]
+
+Desires:
+- [[OBJETIVO_1]]
+- [[OBJETIVO_2]]
+- [[OBJETIVO_DE_QUALIDADE_OU_SEGURANÇA]]
+
+Intentions:
+1. [[PASSO_1]]
+2. [[PASSO_2]]
+3. [[PASSO_3]]
+4. [[QUANDO_ESCALAR_OU_PARAR]]</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Beliefs:
+- O aluno está matriculado em um curso online.
+- As dúvidas comuns são acesso, certificado, pagamento e aulas.
+- O agente não deve inventar políticas.
+
+Desires:
+- Resolver dúvidas simples com rapidez.
+- Manter tom acolhedor.
+- Evitar respostas incorretas sobre regras da escola.
+
+Intentions:
+1. Classificar a dúvida.
+2. Responder com base nas informações disponíveis.
+3. Pedir dado adicional se necessário.
+4. Encaminhar casos de cobrança ou cancelamento para humano.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="rubrica" class="rounded-[30px] border border-white/10 bg-brand-card p-5 lg:p-7">
+            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
+              <div>
+                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">Rúbrica</span>
+                <h3 class="mt-5 text-3xl font-semibold text-brand-white">Critérios para avaliar</h3>
+                <p class="mt-4 text-base leading-7 text-brand-muted">Use depois da resposta da IA para avaliar qualidade, encontrar falhas e pedir uma versão melhor.</p>
+                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                  <p><strong class="text-brand-white">Por que usar:</strong> troca “não gostei” por critérios claros de melhoria.</p>
+                  <p><strong class="text-brand-white">Melhor para:</strong> revisar respostas, corrigir prompts, avaliar trabalhos e padronizar qualidade.</p>
+                  <p><strong class="text-brand-white">Evite quando:</strong> você ainda nem definiu o que seria uma boa resposta.</p>
+                </div>
+              </div>
+              <div class="grid gap-4">
+                <div class="rounded-[24px] border border-white/10 bg-black/30 p-5">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h4 class="text-xl font-semibold text-brand-white">Template</h4>
+                    <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-rubrica-template">
+                      <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                    </button>
+                  </div>
+                  <pre id="copy-rubrica-template" class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
+
+1. Aderência ao prompt: cumpriu [[INSTRUÇÕES_PRINCIPAIS]]?
+2. Precisão: há erros, invenções ou pontos sem base?
+3. Clareza: [[PÚBLICO]] entenderia sem esforço?
+4. Formato: seguiu [[FORMATO_PEDIDO]]?
+5. Tom: está adequado para [[CONTEXTO_OU_PÚBLICO]]?
+
+Depois entregue:
+- nota por critério;
+- principal problema;
+- 3 melhorias concretas;
+- versão revisada.</code></pre>
+                </div>
+                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
+                  <h4 class="text-xl font-semibold text-brand-white">Exemplo preenchido</h4>
+                  <pre class="mt-4 rounded-[18px] bg-black/45 p-4 text-sm leading-7 text-brand-ink"><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
+
+1. Aderência ao prompt: cumpriu as instruções de explicar IA para iniciantes?
+2. Precisão: há erros, invenções ou pontos sem base?
+3. Clareza: profissionais administrativos entenderiam sem esforço?
+4. Formato: seguiu 4 parágrafos curtos e 3 cuidados finais?
+5. Tom: está adequado para uma aula introdutória?
+
+Depois entregue nota por critério, principal problema, 3 melhorias e versão revisada.</code></pre>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="checklist" class="border-y border-white/10 bg-brand-soft py-16">
+        <div class="section-shell grid gap-8 lg:grid-cols-[0.7fr_1fr]">
+          <div>
+            <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Checklist final</span>
+            <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Antes de enviar o prompt, confira.</h2>
+            <p class="mt-4 text-base leading-7 text-brand-muted">Se faltar algum item, o modelo provavelmente vai preencher a lacuna com suposições.</p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Tarefa clara</strong><span class="mt-1 block text-sm text-brand-muted">A IA sabe exatamente o que fazer.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Campos substituídos</strong><span class="mt-1 block text-sm text-brand-muted">Nada ficou como [[EXEMPLO]].</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Contexto suficiente</strong><span class="mt-1 block text-sm text-brand-muted">Público, cenário e dados aparecem.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Formato definido</strong><span class="mt-1 block text-sm text-brand-muted">Tabela, lista, e-mail, JSON ou texto.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Critério de sucesso</strong><span class="mt-1 block text-sm text-brand-muted">Fica claro o que é uma boa resposta.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-white/10 bg-brand-card p-4">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-white">Exemplo incluído</strong><span class="mt-1 block text-sm text-brand-muted">Quando tom ou estilo importam.</span></span>
+            </label>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="section-shell py-8 text-sm text-brand-muted">
+      <div class="flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+        <p>Guia de Prompt Engineering. HTML + Tailwind CDN + Encode Sans.</p>
+        <div class="flex flex-wrap gap-2">
+          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/prompt-engineering.md">Base</a>
+          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/race.md">RACE</a>
+          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/care.md">CARE</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const copyButtons = document.querySelectorAll(".copy-button");
+
+      async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+      }
+
+      copyButtons.forEach((button) => {
+        button.addEventListener("click", async () => {
+          const target = document.getElementById(button.dataset.copyTarget);
+          if (!target) return;
+
+          await copyText(target.innerText.trim());
+          button.dataset.copied = "true";
+          window.setTimeout(() => {
+            button.dataset.copied = "false";
+          }, 1800);
+        });
+      });
+    </script>
+  </body>
+</html>
