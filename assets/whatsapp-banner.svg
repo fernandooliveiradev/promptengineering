@@ -27,6 +27,7 @@
     <rect x="0" y="0" width="202" height="58" rx="29" fill="#eceff5"/>
     <text x="28" y="38" font-family="'Encode Sans', Arial, sans-serif" font-size="22" font-weight="800" fill="#000000">NOVO GUIA</text>
   </g>
+  <text x="324" y="130" font-family="'Encode Sans', Arial, sans-serif" font-size="24" font-weight="700" fill="#d7d7df">por Fernando de Oliveira</text>
   <g transform="translate(92 230)">
     <text font-family="'Encode Sans', Arial, sans-serif" font-size="82" font-weight="300" fill="#d7d7df">
       <tspan x="0" y="0">Prompt Engineering</tspan>
@@ -57,5 +58,6 @@
       <path d="M18 492H330" stroke="#ffffff" stroke-opacity="0.16" stroke-width="4" stroke-linecap="round"/>
     </g>
   </g>
-  <text x="92" y="820" font-family="'Encode Sans', Arial, sans-serif" font-size="24" font-weight="600" fill="#9ca0b4">fernandooliveiradev.github.io/promptengineering</text>
+  <text x="92" y="804" font-family="'Encode Sans', Arial, sans-serif" font-size="24" font-weight="600" fill="#9ca0b4">fernandooliveiradev.github.io/promptengineering</text>
+  <text x="92" y="844" font-family="'Encode Sans', Arial, sans-serif" font-size="22" font-weight="500" fill="#9ca0b4">linkedin.com/in/fernandodeoliveiraprod  |  github.com/fernandooliveiradev</text>
 </svg>

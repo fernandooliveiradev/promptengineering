@@ -1,4 +1,14 @@
-# Prompt Engine — Documentação de Apoio
+# Prompt Engineering: Guia de Bolso
+
+Página publicada: https://fernandooliveiradev.github.io/promptengineering/
+
+Autor: Fernando de Oliveira  
+LinkedIn: https://www.linkedin.com/in/fernandodeoliveiraprod  
+GitHub: https://github.com/fernandooliveiradev
+
+---
+
+## Documentação de Apoio
 
 > Coletânea de documentação profissional para cursos online sobre prompt engineering e frameworks relacionados.
 > Todos os links foram verificados como ativos em junho de 2026.
@@ -52,4 +62,4 @@ Para um curso acadêmico, recomenda-se:
 1. Comece por `prompt-engineering.md` para fundamentos gerais.
 2. Para cursos práticos introdutórios: RACE → TAG → CARE (do mais completo ao mais minimalista).
 3. Para cursos avançados/acadêmicos: ReAct (paper) e BDI (arquitetura de agentes).
-4. Cada arquivo `.md` é autossuficiente e pode ser usado como material de leitura isolado.# promptengineering
+4. Cada arquivo `.md` é autossuficiente e pode ser usado como material de leitura isolado.
