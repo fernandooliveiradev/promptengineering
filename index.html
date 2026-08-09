@@ -24,7 +24,7 @@
     />
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23000000'/%3E%3Cpath d='M15 20h34M15 32h22M15 44h30' stroke='%232f64ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231748E8'/%3E%3Cpath d='M15 20h34M15 32h22M15 44h30' stroke='%23ffffff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E"
     />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -43,9 +43,9 @@
                 ink: "#1a1d26",
                 muted: "#5b6172",
                 white: "#ffffff",
-                paper: "#fafaf9",
-                line: "#e7e5e4",
-                pill: "#eef1f8",
+                paper: "#f6f7fb",
+                line: "#e6e8ef",
+                pill: "#eef1fa",
                 card: "#ffffff",
               },
             },
@@ -55,15 +55,15 @@
     </script>
     <style>
       :root {
-        --black: #02040C;
-        --blue: #1748E8;
+        --black: #02040c;
+        --blue: #1748e8;
         --blue-light: #2f64ff;
         --ink: #1a1d26;
         --muted: #5b6172;
         --white: #ffffff;
-        --paper: #fafaf9;
-        --line: #e7e5e4;
-        --pill: #eef1f8;
+        --paper: #f6f7fb;
+        --line: #e6e8ef;
+        --pill: #eef1fa;
         --card: #ffffff;
         color-scheme: light;
       }
@@ -73,10 +73,11 @@
         color: var(--ink);
         font-family: "Encode Sans", system-ui, sans-serif;
         letter-spacing: 0;
+        -webkit-font-smoothing: antialiased;
       }
 
       .focus-ring:focus-visible {
-        outline: 3px solid rgba(23, 72, 232, 0.45);
+        outline: 3px solid rgba(23, 72, 232, 0.4);
         outline-offset: 3px;
       }
 
@@ -90,7 +91,7 @@
         padding: 0 22px;
         font-size: 15px;
         font-weight: 800;
-        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+        transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
       }
 
       .btn:hover {
@@ -100,6 +101,7 @@
       .btn-primary {
         background: var(--blue);
         color: var(--white);
+        box-shadow: 0 10px 24px -12px rgba(23, 72, 232, 0.55);
       }
 
       .btn-primary:hover {
@@ -118,11 +120,12 @@
       .btn-ghost {
         border: 1px solid var(--line);
         color: var(--ink);
+        background: var(--white);
       }
 
       .btn-ghost:hover {
         background: var(--paper);
-        border-color: #d1d5db;
+        border-color: #cfd4e2;
       }
 
       .copy-button[data-copied="true"] .copy-label {
@@ -135,14 +138,15 @@
 
       .placeholder {
         border-radius: 999px;
-        background: rgba(23, 72, 232, 0.10);
-        color: var(--black);
+        background: rgba(23, 72, 232, 0.1);
+        color: var(--blue);
         padding: 0.08rem 0.45rem;
         white-space: nowrap;
+        font-weight: 700;
       }
 
       .section-shell {
-        width: min(1180px, calc(100% - 36px));
+        width: min(1120px, calc(100% - 36px));
         margin-inline: auto;
       }
 
@@ -151,16 +155,97 @@
         overflow-wrap: anywhere;
       }
 
-      /* Código nos cards: fundo escuro mantém contraste alto e destaca o template */
-      pre.code-dark {
+      /* Bloco de código: fundo preto, texto claro, alto contraste */
+      .code-dark {
         background: var(--black);
-        color: #e8e9ef;
+        color: #eceef4;
+      }
+
+      .code-dark code {
+        color: #eceef4;
+      }
+
+      /* Link de framework na escolha: linha com número grande */
+      .pick-link {
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        padding: 22px 4px;
+        border-bottom: 1px solid var(--line);
+        transition: color 0.18s ease;
+      }
+      .pick-link:hover {
+        color: var(--blue);
+      }
+      .pick-num {
+        font-weight: 300;
+        font-size: 26px;
+        color: var(--blue);
+        min-width: 40px;
+      }
+      .pick-name {
+        font-weight: 800;
+        font-size: 22px;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+      .pick-desc {
+        font-size: 14px;
+        color: var(--muted);
+        margin-left: auto;
+        text-align: right;
+        max-width: 320px;
+      }
+      @media (max-width: 640px) {
+        .pick-desc {
+          display: none;
+        }
+      }
+
+      /* Card de framework: layout em colunas com divisória */
+      .fw-card {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 24px;
+        overflow: hidden;
+      }
+      .fw-side {
+        padding: 36px 34px;
+        border-bottom: 1px solid var(--line);
+      }
+      @media (min-width: 1024px) {
+        .fw-side {
+          border-bottom: 0;
+          border-right: 1px solid var(--line);
+        }
+      }
+      .fw-code {
+        padding: 36px 34px;
+        background: var(--paper);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--blue);
+      }
+      .badge::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        background: var(--blue);
+        border-radius: 999px;
       }
     </style>
   </head>
 
   <body class="antialiased">
-    <header class="sticky top-0 z-50 border-b border-brand-line bg-brand-paper/90 backdrop-blur-xl">
+    <header class="sticky top-0 z-50 border-b border-brand-line bg-brand-white/90 backdrop-blur-xl">
       <nav class="section-shell flex items-center justify-between gap-4 py-4">
         <a href="#inicio" class="focus-ring flex min-w-0 items-center gap-3 rounded-full">
           <span class="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-blue text-sm font-extrabold text-brand-white">PE</span>
@@ -177,100 +262,119 @@
     </header>
 
     <main id="inicio">
-      <section class="border-b border-brand-line bg-[radial-gradient(circle_at_75%_25%,rgba(23,72,232,0.08),transparent_340px)]">
-        <div class="section-shell grid min-h-[calc(100svh-73px)] items-center gap-10 py-12 lg:grid-cols-[0.95fr_1.05fr]">
+      <!-- HERO -->
+      <section class="border-b border-brand-line bg-[radial-gradient(circle_at_80%_20%,rgba(23,72,232,0.09),transparent_420px)]">
+        <div class="section-shell grid min-h-[calc(100svh-73px)] items-center gap-12 py-16 lg:grid-cols-[1.05fr_0.95fr]">
           <div>
-            <p class="inline-flex rounded-full border border-brand-line bg-brand-pill px-4 py-2 text-xs font-extrabold uppercase tracking-[0.22em] text-brand-ink">
-              Guia de bolso prático
-            </p>
-            <h1 class="mt-6 max-w-3xl text-pretty text-5xl font-light leading-[1.02] text-brand-ink sm:text-6xl lg:text-7xl">
-              Prompts melhores, sem decorar fórmula.
+            <h1 class="max-w-3xl text-pretty text-5xl font-extrabold leading-[1.02] tracking-[-0.03em] text-brand-black sm:text-6xl lg:text-[4.6rem]">
+              Prompts melhores, <span class="text-brand-blue">sem decorar fórmula.</span>
             </h1>
-            <p class="mt-6 max-w-2xl text-lg leading-8 text-brand-muted">
+            <p class="mt-7 max-w-2xl text-lg leading-8 text-brand-muted">
               Use este guia para escolher o framework certo, preencher os campos marcados e transformar pedidos vagos em prompts claros.
             </p>
-            <div class="mt-5 flex flex-wrap items-center gap-2 text-sm font-semibold text-brand-muted">
-              <span class="rounded-full border border-brand-line bg-brand-pill px-4 py-2">Autor: Fernando de Oliveira</span>
-              <a class="focus-ring rounded-full border border-brand-line bg-brand-pill px-4 py-2 text-brand-ink transition hover:border-brand-light/60 hover:text-brand-black" href="https://www.linkedin.com/in/fernandodeoliveiraprod" target="_blank" rel="noopener">LinkedIn</a>
-              <a class="focus-ring rounded-full border border-brand-line bg-brand-pill px-4 py-2 text-brand-ink transition hover:border-brand-light/60 hover:text-brand-black" href="https://github.com/fernandooliveiradev" target="_blank" rel="noopener">GitHub</a>
-            </div>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-              <a href="#escolha" class="btn btn-light focus-ring">Me ajude a escolher</a>
+              <a href="#escolha" class="btn btn-primary focus-ring">Me ajude a escolher</a>
               <a href="#universal" class="btn btn-ghost focus-ring">Ver template universal</a>
+            </div>
+            <div class="mt-8 flex flex-wrap items-center gap-2 text-sm font-semibold text-brand-muted">
+              <span class="rounded-full border border-brand-line bg-brand-white px-4 py-2">Autor: Fernando de Oliveira</span>
+              <a class="focus-ring rounded-full border border-brand-line bg-brand-white px-4 py-2 text-brand-ink transition hover:border-brand-light/60" href="https://www.linkedin.com/in/fernandodeoliveiraprod" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="focus-ring rounded-full border border-brand-line bg-brand-white px-4 py-2 text-brand-ink transition hover:border-brand-light/60" href="https://github.com/fernandooliveiradev" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
 
           <div class="relative">
-            <img
-              src="assets/guide-hero.png"
-              alt="Ilustração abstrata de cartões de prompt com campos substituíveis"
-              class="aspect-[1.18/1] w-full rounded-[28px] border border-brand-line object-cover shadow-[0_26px_90px_rgba(23,72,232,0.22)]"
-            />
+            <div class="rounded-[24px] border border-brand-line bg-brand-card p-6 shadow-[0_24px_70px_-30px_rgba(23,72,232,0.35)]">
+              <div class="flex items-center gap-2 border-b border-brand-line pb-4">
+                <span class="h-3 w-3 rounded-full bg-[#ff5f57]"></span>
+                <span class="h-3 w-3 rounded-full bg-[#febc2e]"></span>
+                <span class="h-3 w-3 rounded-full bg-[#28c840]"></span>
+                <span class="ml-2 text-xs font-bold text-brand-muted">prompt.txt</span>
+              </div>
+              <pre class="code-dark mt-4 rounded-[16px] p-5 text-sm leading-7"><code>Você é [[PAPEL_ESPECIALISTA]].
+
+Preciso que você [[AÇÃO_PRINCIPAL]].
+
+Contexto:
+- Público: [[PÚBLICO]]
+- Situação: [[SITUAÇÃO]]
+- Dados: [[DADOS_OU_REFERÊNCIAS]]
+
+Regras:
+- Tom [[TOM]]
+- Evite [[O_QUE_EVITAR]]
+- Formato [[FORMATO]]</code></pre>
+              <p class="mt-4 text-xs leading-6 text-brand-muted">
+                O template universal. Tudo entre <span class="placeholder">[[ ]]</span> é para substituir.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="escolha" class="section-shell py-16">
-        <div class="max-w-3xl">
-          <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Escolha rápida</span>
-          <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Use o menor método que resolve o seu problema.</h2>
-          <p class="mt-4 text-base leading-7 text-brand-muted">
-            A ideia não é usar tudo sempre. É escolher a estrutura que dá contexto suficiente para a IA responder bem.
-          </p>
-        </div>
+      <!-- ESCOLHA -->
+      <section id="escolha" class="section-shell py-20">
+        <h2 class="max-w-3xl text-4xl font-extrabold leading-tight tracking-[-0.02em] text-brand-black sm:text-5xl">
+          Use o menor método que resolve o seu problema.
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-7 text-brand-muted">
+          A ideia não é usar tudo sempre. É escolher a estrutura que dá contexto suficiente para a IA responder bem.
+        </p>
 
-        <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <a href="#tag" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Tenho pressa</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">TAG</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para um pedido direto, com pouco contexto e resultado rápido.</p>
+        <div class="mt-10">
+          <a href="#tag" class="pick-link focus-ring group">
+            <span class="pick-num">01</span>
+            <span class="pick-name">TAG</span>
+            <span class="pick-desc">Para um pedido direto, com pouco contexto e resultado rápido.</span>
           </a>
-          <a href="#race" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Quero controle</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">RACE</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para escrever, revisar, explicar ou analisar com papel, contexto e formato.</p>
+          <a href="#race" class="pick-link focus-ring group">
+            <span class="pick-num">02</span>
+            <span class="pick-name">RACE</span>
+            <span class="pick-desc">Para escrever, revisar, explicar ou analisar com papel, contexto e formato.</span>
           </a>
-          <a href="#care" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Preciso de qualidade</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">CARE</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para tarefas profissionais com regras, tom de marca e exemplos.</p>
+          <a href="#care" class="pick-link focus-ring group">
+            <span class="pick-num">03</span>
+            <span class="pick-name">CARE</span>
+            <span class="pick-desc">Para tarefas profissionais com regras, tom de marca e exemplos.</span>
           </a>
-          <a href="#react" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Precisa pesquisar</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">ReAct</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para raciocinar, buscar evidências, usar ferramentas e só então concluir.</p>
+          <a href="#react" class="pick-link focus-ring group">
+            <span class="pick-num">04</span>
+            <span class="pick-name">ReAct</span>
+            <span class="pick-desc">Para raciocinar, buscar evidências, usar ferramentas e só então concluir.</span>
           </a>
-          <a href="#bdi" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Estou criando agente</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">BDI</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para separar o que o agente sabe, quer e pretende fazer.</p>
+          <a href="#bdi" class="pick-link focus-ring group">
+            <span class="pick-num">05</span>
+            <span class="pick-name">BDI</span>
+            <span class="pick-desc">Para separar o que o agente sabe, quer e pretende fazer.</span>
           </a>
-          <a href="#rubrica" class="focus-ring rounded-[22px] border border-brand-line bg-brand-card p-5 transition hover:border-brand-light/60">
-            <p class="text-sm font-extrabold text-brand-light">Quero avaliar</p>
-            <h3 class="mt-2 text-2xl font-bold text-brand-black">Rúbrica</h3>
-            <p class="mt-2 text-sm leading-6 text-brand-muted">Para dar nota, encontrar falhas e pedir uma versão melhor.</p>
+          <a href="#rubrica" class="pick-link focus-ring group">
+            <span class="pick-num">06</span>
+            <span class="pick-name">Rúbrica</span>
+            <span class="pick-desc">Para dar nota, encontrar falhas e pedir uma versão melhor.</span>
           </a>
         </div>
       </section>
 
-      <section id="universal" class="border-y border-brand-line bg-brand-paper py-16">
-        <div class="section-shell grid gap-8 lg:grid-cols-[0.7fr_1fr]">
+      <!-- TEMPLATE UNIVERSAL -->
+      <section id="universal" class="border-y border-brand-line bg-brand-paper py-20">
+        <div class="section-shell grid gap-10 lg:grid-cols-[0.65fr_1fr]">
           <div>
-            <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Como preencher</span>
-            <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Tudo que estiver entre <span class="placeholder">[[ ]]</span> é para substituir.</h2>
-            <p class="mt-4 text-base leading-7 text-brand-muted">
+            <h2 class="text-4xl font-extrabold leading-tight tracking-[-0.02em] text-brand-black sm:text-5xl">
+              Tudo que estiver entre <span class="placeholder">[[ ]]</span> é para substituir.
+            </h2>
+            <p class="mt-5 text-base leading-7 text-brand-muted">
               Exemplo: troque <span class="placeholder">[[PÚBLICO]]</span> por “donos de pequenos negócios” ou <span class="placeholder">[[FORMATO]]</span> por “tabela com 3 colunas”.
             </p>
           </div>
 
-          <article class="rounded-[26px] border border-brand-line bg-brand-card p-5">
+          <article class="rounded-[24px] border border-brand-line bg-brand-card p-6">
             <div class="flex flex-wrap items-center justify-between gap-3">
               <h3 class="text-2xl font-bold text-brand-black">Template universal</h3>
               <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-universal">
                 <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
               </button>
             </div>
-            <pre id="copy-universal" class="mt-4 rounded-[20px] code-dark p-5 text-sm leading-7 "><code>Você é [[PAPEL_ESPECIALISTA]].
+            <pre id="copy-universal" class="code-dark mt-5 rounded-[18px] p-5 text-sm leading-7"><code>Você é [[PAPEL_ESPECIALISTA]].
 
 Preciso que você [[AÇÃO_PRINCIPAL]].
 
@@ -290,42 +394,43 @@ Critério de sucesso:
         </div>
       </section>
 
-      <section id="frameworks" class="section-shell py-16">
-        <div class="max-w-3xl">
-          <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Frameworks</span>
-          <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Templates com campos marcados e exemplos preenchidos.</h2>
-        </div>
+      <!-- FRAMEWORKS -->
+      <section id="frameworks" class="section-shell py-20">
+        <h2 class="max-w-3xl text-4xl font-extrabold leading-tight tracking-[-0.02em] text-brand-black sm:text-5xl">
+          Templates com campos marcados e exemplos preenchidos.
+        </h2>
 
-        <div class="mt-10 space-y-8">
-          <article id="tag" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">TAG</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Task, Action, Goal</h3>
+        <div class="mt-12 space-y-8">
+          <!-- TAG -->
+          <article id="tag" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">TAG</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Task, Action, Goal</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a tarefa é simples e você só precisa organizar o pedido para a IA não adivinhar o objetivo.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> evita pedidos soltos como “faça um post”.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> posts, ideias, e-mails simples, resumos rápidos e listas.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> existe muito contexto, regras de marca ou risco de interpretação.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-tag-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-tag-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Task: [[O_QUE_PRECISA_SER_FEITO]]
+                  <pre id="copy-tag-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Task: [[O_QUE_PRECISA_SER_FEITO]]
 
 Action: [[COMO_DEVE_SER_FEITO]]
 
 Goal: [[OBJETIVO_FINAL_OU_CRITÉRIO_DE_SUCESSO]]</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Task: Escreva um post de LinkedIn sobre IA no atendimento ao cliente.
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Task: Escreva um post de LinkedIn sobre IA no atendimento ao cliente.
 
 Action: Crie uma abertura forte, 3 ideias práticas e uma pergunta final. Evite jargões técnicos.
 
@@ -335,27 +440,28 @@ Goal: Ajudar donos de pequenos negócios a entenderem como usar IA para responde
             </div>
           </article>
 
-          <article id="race" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">RACE</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Role, Action, Context, Expectation</h3>
+          <!-- RACE -->
+          <article id="race" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">RACE</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Role, Action, Context, Expectation</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use quando você quer uma resposta mais controlada, com especialista, contexto e formato de saída.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> dá direção clara sobre quem a IA deve “ser” e como responder.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> conteúdo, revisão, análise, explicações, propostas e e-mails importantes.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> a tarefa é tão simples que TAG resolve.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-race-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-race-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Role: Você é [[PAPEL_ESPECIALISTA]].
+                  <pre id="copy-race-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Role: Você é [[PAPEL_ESPECIALISTA]].
 
 Action: [[AÇÃO_EXATA_QUE_A_IA_DEVE_EXECUTAR]]
 
@@ -363,9 +469,9 @@ Context: [[PÚBLICO_CENÁRIO_DADOS_RESTRIÇÕES]]
 
 Expectation: Responda em [[FORMATO]], com tom [[TOM]], tamanho [[TAMANHO]] e inclua [[CRITÉRIOS_OBRIGATÓRIOS]].</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Role: Você é um gerente comercial experiente, cordial e objetivo.
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Role: Você é um gerente comercial experiente, cordial e objetivo.
 
 Action: Redija um e-mail para um cliente que pediu 30% de desconto, mas nossa política permite no máximo 10%.
 
@@ -377,27 +483,28 @@ Expectation: Responda com até 180 palavras, tom consultivo, oferecendo 10% de d
             </div>
           </article>
 
-          <article id="care" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">CARE</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Context, Ask, Rules, Examples</h3>
+          <!-- CARE -->
+          <article id="care" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">CARE</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Context, Ask, Rules, Examples</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a resposta precisa ficar profissional, respeitar regras e seguir exemplos de tom ou estilo.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> exemplos e regras reduzem respostas genéricas.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> UX writing, mensagens sensíveis, marca, atendimento, propostas e textos finais.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> você não tem exemplos ou regras relevantes.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-care-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-care-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Context: [[SITUAÇÃO_PROJETO_PÚBLICO]]
+                  <pre id="copy-care-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Context: [[SITUAÇÃO_PROJETO_PÚBLICO]]
 
 Ask: [[O_QUE_VOCÊ_QUER_QUE_A_IA_ENTREGUE]]
 
@@ -411,9 +518,9 @@ Examples:
 - Bom: [[EXEMPLO_BOM]] porque [[POR_QUE_FUNCIONA]]
 - Ruim: [[EXEMPLO_RUIM]] porque [[POR_QUE_EVITAR]]</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Context: Trabalho em um app de cursos online. A mensagem aparece quando o pagamento da assinatura não é aprovado.
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Context: Trabalho em um app de cursos online. A mensagem aparece quando o pagamento da assinatura não é aprovado.
 
 Ask: Crie 5 opções de mensagem de erro.
 
@@ -432,27 +539,28 @@ Examples:
             </div>
           </article>
 
-          <article id="react" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">ReAct</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Reasoning + Acting</h3>
+          <!-- REACT -->
+          <article id="react" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">ReAct</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Reasoning + Acting</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use quando a IA precisa pesquisar, consultar uma fonte, chamar uma ferramenta ou comparar informações antes de responder.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> separa raciocínio, ação e observação antes da conclusão.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> pesquisas, comparações, agentes, APIs, dados externos e decisões multi-etapas.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> não existe ferramenta, fonte ou necessidade de verificação externa.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-react-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-react-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Objetivo: [[RESULTADO_FINAL]]
+                  <pre id="copy-react-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Objetivo: [[RESULTADO_FINAL]]
 
 Fontes ou ferramentas disponíveis:
 - [[FONTE_OU_FERRAMENTA_1]]
@@ -465,9 +573,9 @@ Processo:
 4. Compare as opções.
 5. Finalize com [[FORMATO_DA_RESPOSTA_FINAL]].</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Objetivo: Recomendar uma ferramenta de automação de atendimento para uma pequena escola online.
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Objetivo: Recomendar uma ferramenta de automação de atendimento para uma pequena escola online.
 
 Fontes ou ferramentas disponíveis:
 - Busca web
@@ -485,27 +593,28 @@ Processo:
             </div>
           </article>
 
-          <article id="bdi" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">BDI</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Beliefs, Desires, Intentions</h3>
+          <!-- BDI -->
+          <article id="bdi" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">BDI</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Beliefs, Desires, Intentions</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use como analogia quando estiver desenhando um agente ou assistente com comportamento mais estável.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> separa fatos, objetivos e plano de ação.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> agentes de suporte, assistentes internos, triagens e automações.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> você só precisa de uma resposta única e simples.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-bdi-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-bdi-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Beliefs:
+                  <pre id="copy-bdi-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Beliefs:
 - [[FATO_OU_CONTEXTO_1]]
 - [[FATO_OU_CONTEXTO_2]]
 - [[LIMITAÇÃO_OU_REGRA_IMPORTANTE]]
@@ -521,9 +630,9 @@ Intentions:
 3. [[PASSO_3]]
 4. [[QUANDO_ESCALAR_OU_PARAR]]</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Beliefs:
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Beliefs:
 - O aluno está matriculado em um curso online.
 - As dúvidas comuns são acesso, certificado, pagamento e aulas.
 - O agente não deve inventar políticas.
@@ -543,27 +652,28 @@ Intentions:
             </div>
           </article>
 
-          <article id="rubrica" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="grid gap-7 lg:grid-cols-[0.72fr_1fr]">
-              <div>
-                <span class="inline-flex rounded-full bg-brand-blue px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-brand-white">Rúbrica</span>
-                <h3 class="mt-5 text-3xl font-bold text-brand-black">Critérios para avaliar</h3>
+          <!-- RUBRICA -->
+          <article id="rubrica" class="fw-card">
+            <div class="grid lg:grid-cols-[0.8fr_1.2fr]">
+              <div class="fw-side">
+                <span class="badge">Rúbrica</span>
+                <h3 class="mt-4 text-3xl font-bold tracking-[-0.02em] text-brand-black">Critérios para avaliar</h3>
                 <p class="mt-4 text-base leading-7 text-brand-muted">Use depois da resposta da IA para avaliar qualidade, encontrar falhas e pedir uma versão melhor.</p>
-                <div class="mt-5 space-y-3 text-sm leading-6 text-brand-muted">
+                <div class="mt-6 space-y-3 text-sm leading-6 text-brand-muted">
                   <p><strong class="text-brand-black">Por que usar:</strong> troca “não gostei” por critérios claros de melhoria.</p>
                   <p><strong class="text-brand-black">Melhor para:</strong> revisar respostas, corrigir prompts, avaliar trabalhos e padronizar qualidade.</p>
                   <p><strong class="text-brand-black">Evite quando:</strong> você ainda nem definiu o que seria uma boa resposta.</p>
                 </div>
               </div>
-              <div class="grid gap-4">
-                <div class="rounded-[24px] border border-brand-line code-dark p-5">
+              <div class="fw-code grid gap-4">
+                <div class="rounded-[20px] border border-brand-line bg-brand-card p-5">
                   <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h4 class="text-xl font-bold text-brand-black">Template</h4>
+                    <h4 class="text-lg font-bold text-brand-black">Template</h4>
                     <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-rubrica-template">
                       <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
                     </button>
                   </div>
-                  <pre id="copy-rubrica-template" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
+                  <pre id="copy-rubrica-template" class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
 
 1. Aderência ao prompt: cumpriu [[INSTRUÇÕES_PRINCIPAIS]]?
 2. Precisão: há erros, invenções ou pontos sem base?
@@ -577,9 +687,9 @@ Depois entregue:
 - 3 melhorias concretas;
 - versão revisada.</code></pre>
                 </div>
-                <div class="rounded-[24px] border border-brand-light/20 bg-brand-blue/10 p-5">
-                  <h4 class="text-xl font-bold text-brand-black">Exemplo preenchido</h4>
-                  <pre class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
+                <div class="rounded-[20px] border border-brand-blue/20 bg-brand-blue/5 p-5">
+                  <h4 class="text-lg font-bold text-brand-black">Exemplo preenchido</h4>
+                  <pre class="code-dark mt-4 rounded-[16px] p-4 text-sm leading-7"><code>Avalie a resposta abaixo de 1 a 4 em cada critério:
 
 1. Aderência ao prompt: cumpriu as instruções de explicar IA para iniciantes?
 2. Precisão: há erros, invenções ou pontos sem base?
@@ -595,65 +705,31 @@ Depois entregue nota por critério, principal problema, 3 melhorias e versão re
         </div>
       </section>
 
-      <section id="checklist" class="border-y border-brand-line bg-brand-paper py-16">
-        <div class="section-shell grid gap-8 lg:grid-cols-[0.7fr_1fr]">
-          <div>
-            <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Checklist final</span>
-            <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">Antes de enviar o prompt, confira.</h2>
-            <p class="mt-4 text-base leading-7 text-brand-muted">Se faltar algum item, o modelo provavelmente vai preencher a lacuna com suposições.</p>
-          </div>
-          <div class="grid gap-3 sm:grid-cols-2">
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Tarefa clara</strong><span class="mt-1 block text-sm text-brand-muted">A IA sabe exatamente o que fazer.</span></span>
-            </label>
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Campos substituídos</strong><span class="mt-1 block text-sm text-brand-muted">Nada ficou como [[EXEMPLO]].</span></span>
-            </label>
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Contexto suficiente</strong><span class="mt-1 block text-sm text-brand-muted">Público, cenário e dados aparecem.</span></span>
-            </label>
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Formato definido</strong><span class="mt-1 block text-sm text-brand-muted">Tabela, lista, e-mail, JSON ou texto.</span></span>
-            </label>
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Critério de sucesso</strong><span class="mt-1 block text-sm text-brand-muted">Fica claro o que é uma boa resposta.</span></span>
-            </label>
-            <label class="flex cursor-pointer gap-3 rounded-[22px] border border-brand-line bg-brand-card p-4">
-              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
-              <span><strong class="block text-brand-black">Exemplo incluído</strong><span class="mt-1 block text-sm text-brand-muted">Quando tom ou estilo importam.</span></span>
-            </label>
-          </div>
-        </div>
-      </section>
-      <section id="tecnicas" class="section-shell py-16">
-        <div class="max-w-3xl">
-          <span class="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-light">Técnicas oficiais</span>
-          <h2 class="mt-4 text-4xl font-light leading-tight text-brand-ink sm:text-5xl">O que as documentações oficiais ensinam.</h2>
-          <p class="mt-4 text-base leading-7 text-brand-muted">
+      <!-- TÉCNICAS -->
+      <section id="tecnicas" class="border-y border-brand-line bg-brand-paper py-20">
+        <div class="section-shell">
+          <h2 class="max-w-3xl text-4xl font-extrabold leading-tight tracking-[-0.02em] text-brand-black sm:text-5xl">
+            O que as documentações oficiais ensinam.
+          </h2>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-brand-muted">
             Técnicas documentadas pela Microsoft, Google, OpenAI, Anthropic e AWS. Use sozinhas ou dentro dos frameworks acima — elas deixam qualquer prompt mais confiável.
           </p>
-        </div>
 
-        <div class="mt-8 grid gap-4 md:grid-cols-2">
-          <article id="fewshot" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Few-shot learning</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">Dê exemplos no prompt</h3>
+          <div class="mt-10 grid gap-5 md:grid-cols-2">
+            <article id="fewshot" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Few-shot</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">Dê exemplos no prompt</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-fewshot">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-fewshot">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              Um exemplo bem escolhido vale mais que dez instruções. Mostre à IA o formato que você quer com 2–3 pares de entrada/saída. Fonte: Microsoft, OpenAI, AWS.
-            </p>
-            <pre id="copy-fewshot" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Classifique o sentimento da frase como positivo, neutro ou negativo.
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                Um exemplo bem escolhido vale mais que dez instruções. Mostre à IA o formato que você quer com 2–3 pares de entrada/saída. Fonte: Microsoft, OpenAI, AWS.
+              </p>
+              <pre id="copy-fewshot" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>Classifique o sentimento da frase como positivo, neutro ou negativo.
 
 Exemplo 1:
 Frase: "O produto chegou antes do prazo!"
@@ -666,22 +742,22 @@ Resposta: neutro
 Agora classifique:
 Frase: "Suporte resolveu meu problema em minutos."
 Resposta:</code></pre>
-          </article>
+            </article>
 
-          <article id="delimitadores" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Delimitadores</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">Separe instrução de dado</h3>
+            <article id="delimitadores" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Delimitadores</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">Separe instrução de dado</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-delimitadores">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-delimitadores">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              Use marcas claras (aspas triplas, XML ou ###) para separar o que é instrução do que é conteúdo. Evita que o dado "vaze" e vire instrução. Fonte: AWS, Microsoft, OpenAI.
-            </p>
-            <pre id="copy-delimitadores" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Resuma o texto abaixo entre as marcas em até 3 linhas.
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                Use marcas claras (aspas triplas, XML ou ###) para separar o que é instrução do que é conteúdo. Evita que o dado "vaze" e vire instrução. Fonte: AWS, Microsoft, OpenAI.
+              </p>
+              <pre id="copy-delimitadores" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>Resuma o texto abaixo entre as marcas em até 3 linhas.
 
 TEXTO:
 """
@@ -689,22 +765,22 @@ TEXTO:
 """
 
 Resumo em português, sem opinião própria:</code></pre>
-          </article>
+            </article>
 
-          <article id="chainofthought" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Chain of Thought</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">Peça o raciocínio</h3>
+            <article id="chainofthought" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Chain of Thought</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">Peça o raciocínio</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-cot">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-cot">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              Para tarefas de lógica, matemática ou decisão, peça passos explícitos. ⚠️ Modelos de raciocínio (o-series, gpt-5) já raciocinam sozinhos — para esses, não use. Fonte: Microsoft, OpenAI.
-            </p>
-            <pre id="copy-cot" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Resolva o problema abaixo. Pense passo a passo e só no final dê a resposta final.
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                Para tarefas de lógica, matemática ou decisão, peça passos explícitos. Modelos de raciocínio (o-series, gpt-5) já raciocinam sozinhos — para esses, não use. Fonte: Microsoft, OpenAI.
+              </p>
+              <pre id="copy-cot" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>Resolva o problema abaixo. Pense passo a passo e só no final dê a resposta final.
 
 Problema: [[DESCREVA_O_PROBLEMA]]
 
@@ -715,43 +791,43 @@ Passos:
 4. Confira se a resposta responde ao pedido.
 
 Resposta final:</code></pre>
-          </article>
+            </article>
 
-          <article id="papeis" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Papéis de mensagem</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">System vs User</h3>
+            <article id="papeis" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Papéis</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">System vs User</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-papeis">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-papeis">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              No system message ficam as regras fixas (tom, formato, limites). No user, o pedido e o dado de cada vez. Separação que deixa o prompt estável. Fonte: Microsoft, OpenAI.
-            </p>
-            <pre id="copy-papeis" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>System:
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                No system message ficam as regras fixas (tom, formato, limites). No user, o pedido e o dado de cada vez. Separação que deixa o prompt estável. Fonte: Microsoft, OpenAI.
+              </p>
+              <pre id="copy-papeis" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>System:
 Você é [[PAPEL_ESPECIALISTA]]. Responda em [[FORMATO]], tom [[TOM]].
 Nunca invente dados; se não souber, diga que não sabe.
 
 User:
 [[PEDIDO_OU_DADO_DA_VEZ]]</code></pre>
-          </article>
+            </article>
 
-          <article id="antialucinacao" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Anti-alucinação</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">Reduza invenções</h3>
+            <article id="antialucinacao" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Anti-alucinação</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">Reduza invenções</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-antialuc">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-antialuc">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              Quando a resposta depende de um texto de referência, diga: use só o contexto, cite a fonte, e admita quando não encontrar. Fonte: Anthropic, OpenAI.
-            </p>
-            <pre id="copy-antialuc" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Responda usando APENAS o contexto abaixo.
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                Quando a resposta depende de um texto de referência, diga: use só o contexto, cite a fonte, e admita quando não encontrar. Fonte: Anthropic, OpenAI.
+              </p>
+              <pre id="copy-antialuc" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>Responda usando APENAS o contexto abaixo.
 
 CONTEXTO:
 """
@@ -762,22 +838,22 @@ Regras:
 - Baseie cada afirmação no contexto.
 - Se a informação não estiver no contexto, diga "não encontrei no contexto".
 - Cite o trecho quando possível.</code></pre>
-          </article>
+            </article>
 
-          <article id="encadeamento" class="rounded-[30px] border border-brand-line bg-brand-card p-5 lg:p-7">
-            <div class="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <p class="text-sm font-extrabold text-brand-light">Encadeamento</p>
-                <h3 class="mt-1 text-2xl font-bold text-brand-black">Divida tarefas complexas</h3>
+            <article id="encadeamento" class="rounded-[24px] border border-brand-line bg-brand-card p-6">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <span class="badge">Encadeamento</span>
+                  <h3 class="mt-3 text-2xl font-bold text-brand-black">Divida tarefas complexas</h3>
+                </div>
+                <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-encadeamento">
+                  <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
+                </button>
               </div>
-              <button class="copy-button btn btn-light focus-ring min-h-10 px-4 text-sm" data-copy-target="copy-encadeamento">
-                <span class="copy-label">Copiar</span><span class="copied-label hidden">Copiado</span>
-              </button>
-            </div>
-            <p class="mt-4 text-sm leading-6 text-brand-muted">
-              Tarefa grande demais = resposta genérica. Quebre em etapas: um prompt para organizar, outro para escrever, outro para revisar. Fonte: Google (prompts encadeados).
-            </p>
-            <pre id="copy-encadeamento" class="mt-4 rounded-[18px] code-dark p-4 text-sm leading-7 "><code>Passo 1 — Organizar:
+              <p class="mt-4 text-sm leading-6 text-brand-muted">
+                Tarefa grande demais = resposta genérica. Quebre em etapas: um prompt para organizar, outro para escrever, outro para revisar. Fonte: Google (prompts encadeados).
+              </p>
+              <pre id="copy-encadeamento" class="code-dark mt-5 rounded-[16px] p-4 text-sm leading-7"><code>Passo 1 — Organizar:
 Liste os principais pontos de [[TEMA]] em tópicos.
 
 Passo 2 — Escrever:
@@ -785,28 +861,68 @@ Transforme cada tópico em um parágrafo curto para [[PÚBLICO]].
 
 Passo 3 — Revisar:
 Aponte trechos confusos e reescreva-os com clareza.</code></pre>
-          </article>
-        </div>
+            </article>
+          </div>
 
-        <p class="mt-8 text-xs leading-6 text-brand-muted">
-          Fontes oficiais: Microsoft Learn (Prompt engineering techniques) · Google AI for Developers (Prompt design strategies) · OpenAI (Prompt engineering guide) · Anthropic (Prompt engineering overview) · AWS (Prompt engineering guidelines, Amazon Bedrock).
-        </p>
+          <p class="mt-8 text-xs leading-6 text-brand-muted">
+            Fontes oficiais: Microsoft Learn (Prompt engineering techniques) · Google AI for Developers (Prompt design strategies) · OpenAI (Prompt engineering guide) · Anthropic (Prompt engineering overview) · AWS (Prompt engineering guidelines, Amazon Bedrock).
+          </p>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="section-shell py-20">
+        <div class="grid gap-10 lg:grid-cols-[0.7fr_1fr]">
+          <div>
+            <h2 class="text-4xl font-extrabold leading-tight tracking-[-0.02em] text-brand-black sm:text-5xl">
+              Antes de enviar o prompt, confira.
+            </h2>
+            <p class="mt-4 text-base leading-7 text-brand-muted">Se faltar algum item, o modelo provavelmente vai preencher a lacuna com suposições.</p>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Tarefa clara</strong><span class="mt-1 block text-sm text-brand-muted">A IA sabe exatamente o que fazer.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Campos substituídos</strong><span class="mt-1 block text-sm text-brand-muted">Nada ficou como [[EXEMPLO]].</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Contexto suficiente</strong><span class="mt-1 block text-sm text-brand-muted">Público, cenário e dados aparecem.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Formato definido</strong><span class="mt-1 block text-sm text-brand-muted">Tabela, lista, e-mail, JSON ou texto.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Critério de sucesso</strong><span class="mt-1 block text-sm text-brand-muted">Fica claro o que é uma boa resposta.</span></span>
+            </label>
+            <label class="flex cursor-pointer gap-3 rounded-[20px] border border-brand-line bg-brand-card p-4 transition hover:border-brand-light/50">
+              <input class="mt-1 h-5 w-5 accent-brand-blue" type="checkbox" />
+              <span><strong class="block text-brand-black">Exemplo incluído</strong><span class="mt-1 block text-sm text-brand-muted">Quando tom ou estilo importam.</span></span>
+            </label>
+          </div>
+        </div>
       </section>
     </main>
 
-    <footer class="section-shell py-8 text-sm text-brand-muted">
-      <div class="flex flex-col gap-4 border-t border-brand-line pt-6 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p class="font-semibold text-brand-ink">Prompt Engineering: Guia de Bolso</p>
-          <p class="mt-1">Criado por Fernando de Oliveira. HTML + Tailwind CDN + Encode Sans.</p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="https://www.linkedin.com/in/fernandodeoliveiraprod" target="_blank" rel="noopener">LinkedIn</a>
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="https://github.com/fernandooliveiradev" target="_blank" rel="noopener">GitHub</a>
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/prompt-engineering.md">Base</a>
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/race.md">RACE</a>
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/care.md">CARE</a>
-          <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="#tecnicas">Técnicas</a>
+    <footer class="border-t border-brand-line bg-brand-paper">
+      <div class="section-shell py-8 text-sm text-brand-muted">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <p class="font-bold text-brand-black">Prompt Engineering: Guia de Bolso</p>
+            <p class="mt-1">Criado por Fernando de Oliveira. HTML + Tailwind CDN + Encode Sans.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="https://www.linkedin.com/in/fernandodeoliveiraprod" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="https://github.com/fernandooliveiradev" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/prompt-engineering.md">Base</a>
+            <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/race.md">RACE</a>
+            <a class="btn btn-ghost focus-ring min-h-10 px-4 text-sm" href="docs/care.md">CARE</a>
+          </div>
         </div>
       </div>
     </footer>
